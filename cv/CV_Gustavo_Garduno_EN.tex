@@ -1,0 +1,107 @@
+\documentclass[10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[paperwidth=9in,paperheight=16in,left=0.9in,right=0.9in,top=0.28in,bottom=0.3in]{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage[hidelinks]{hyperref}
+\definecolor{navy}{RGB}{20,50,100}
+\definecolor{gold}{RGB}{166,124,82}
+\definecolor{subtle}{RGB}{120,120,120}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\color{navy}\large\bfseries}{}{0pt}{}[\vspace{-8pt}{\color{gold}\rule{\linewidth}{0.5pt}}]
+\titlespacing*{\section}{0pt}{8pt}{1pt}
+\setlist[itemize]{leftmargin=2.2em,itemsep=0pt,topsep=3pt,parsep=0pt,label=\textbullet}
+\newcommand{\icon}[1]{{\color{gold}#1}}
+\newcommand{\entry}[3]{\textbf{#1}\hfill #2\\\textit{#3}\par}
+\newcommand{\project}[2]{\textbf{#1}\hfill\textit{#2}\par}
+\hypersetup{pdftitle={Gustavo Adolfo Garduño Martínez - CV},pdfauthor={Gustavo Adolfo Garduño Martínez}}
+\begin{document}
+
+\begin{center}
+{\color{navy}\Huge Gustavo Adolfo Garduño Martínez}\\[3pt]
+{\small\color{subtle}Data Scientist | Machine Learning · Python · SQL · Cloud | Background in Actuarial Science and Physics (UNAM)}\\[4pt]
+\icon{\faPhone*}~55 2847 8353 \quad
+\icon{\faEnvelope}~\href{mailto:gustavo.a.gard.m@gmail.com}{\color{navy}gustavo.a.gard.m@gmail.com} \quad
+\icon{\faLinkedin}~\href{https://www.linkedin.com/in/gustavo-adolfo-gardu%C3%B1o-mart%C3%ADnez-881242181/}{\color{navy}LinkedIn} \quad
+\icon{\faGithub}~\href{https://github.com/Gustavo-agm}{\color{navy}GitHub}\\
+\icon{\faMapMarker*}~Mexico City, Mexico
+\end{center}
+
+\section*{Professional Summary}
+Data scientist with a quantitative background in Actuarial Science and Physics. I build end-to-end solutions: data extraction and cleaning with SQL and Python, feature engineering, machine learning models with rigorous validation, and communication of results to technical and business audiences. I have worked with datasets ranging from hundreds of thousands to more than one million records on problems in prediction, credit risk, geospatial analysis, customer segmentation, data reconciliation and decision modeling under uncertainty. I combine statistical rigor with a practical approach: I automate processes, build reproducible pipelines and deliver tools used by non-technical people. I work with a broad stack that includes Python, SQL, advanced Excel, Power BI and cloud environments (Snowflake, Databricks, AWS).
+
+\section*{Education}
+\entry{B.Sc. in Actuarial Science}{Aug 2022 -- 2026 (Completed)}{School of Sciences (Facultad de Ciencias), UNAM}
+\vspace{4pt}
+\textbf{B.Sc. in Physics}\hfill Aug 2018 -- Jun 2022 (Completed)\\
+\textit{School of Sciences (Facultad de Ciencias), UNAM}\\
+\textit{GPA: 9.02/10}\par
+\vspace{4pt}
+\entry{Diploma in Machine Learning and Generative Models}{Jul 2026 -- Feb 2027 (In progress)}{School of Sciences, UNAM (SEAC)}
+
+\section*{Technical Stack}
+\begin{itemize}
+\item \textbf{Python:} Pandas, NumPy, Scikit-learn (Pipelines, ColumnTransformer, cross-validation), Matplotlib, Seaborn, RapidFuzz.
+\item \textbf{Machine Learning and Statistics:} regression, classification, Random Forest, clustering, PCA, SVD, recommender systems, credit scoring, cross-validation, Monte Carlo simulation, sensitivity analysis.
+\item \textbf{Data Engineering and Quality:} data cleaning, record standardization and reconciliation, fuzzy matching, geospatial analysis, reproducible pipelines.
+\item \textbf{Data and BI:} SQL (complex queries, joins, relational database design), advanced Excel (pivot tables, XLOOKUP, data validation, automated templates), Power BI (DAX).
+\item \textbf{Cloud and Big Data:} Snowflake and Databricks (actively learning), Spark, AWS.
+\end{itemize}
+
+\section*{Professional Experience}
+\entry{Data Scientist -- IN MARKET}{2026 -- Present}{Mexico City}
+\begin{itemize}
+\item Developing an Excel tool to build decision trees for pharmacoeconomic dossiers submitted to Mexico's General Health Council (Consejo de Salubridad General).
+\item Designed a step-by-step guided template for non-technical users that captures parameters and treatment alternatives.
+\item Automating in Python the generation of trees, Monte Carlo simulations, sensitivity analyses and tornado diagrams from the template.
+\end{itemize}
+\vspace{5pt}
+\entry{Machine Learning Instructor (Teaching Assistant) -- Pattern Recognition}{2024 -- Present}{School of Sciences (Facultad de Ciencias), UNAM}
+\begin{itemize}
+\item Develop classification, prediction and segmentation projects and materials in Python for university courses.
+\item Automate data cleaning, transformation and analysis processes across different datasets.
+\item Explain complex technical concepts clearly to audiences with different levels of experience.
+\end{itemize}
+\vspace{5pt}
+\entry{Assistant Manager, Commercial Operations}{2022 -- 2026}{Minisúper Sofi’s, Central de Abasto, Mexico City}
+\begin{itemize}
+\item Managed the point-of-sale (POS) system and the inventory, sales, supplier and customer data.
+\item Reconciled sales, inventory and supplier payment records to detect discrepancies and keep information reliable.
+\item Produced sales reports identifying trends and purchasing patterns to support decision-making and inventory planning.
+\end{itemize}
+
+\section*{Featured Projects}
+\project{Geospatial Analysis of Traffic Crashes in Chicago}{Python, Pandas, Matplotlib, Seaborn}
+\begin{itemize}
+\item Processed and validated \textbf{more than 1 million records} (49 variables), checking duplicates, time coverage and data quality before the analysis.
+\item Compared crash concentration and severity at three geographic levels: hexagonal grid, streets and police beats.
+\item Found that \textbf{25\% of the area concentrates 54\% of crashes}, but those areas do not have a higher share of severe crashes (1.64\% vs. 1.96\%).
+\item Designed visualizations for non-technical audiences, prioritizing clarity over complexity.
+\end{itemize}
+\vspace{5pt}
+\project{Machine Learning Pipeline for Flight Delays}{Python, Scikit-learn}
+\begin{itemize}
+\item Built reproducible pipelines (imputation, encoding, scaling) on \textbf{398,000 BTS records} (2003--2025), with no data leakage between training and validation.
+\item Compared Linear Regression and Random Forest with 5-fold cross-validation; Random Forest reduced the error (RMSE) by \textbf{20\%} versus the linear model.
+\item Showed with evidence that a log transformation increased the linear model's error by 63\%, avoiding a harmful preprocessing decision.
+\item Ensured data traceability with a SHA-256 fingerprint and fixed seeds for auditable results.
+\end{itemize}
+\vspace{5pt}
+\project{Automated Reconciliation of Vehicle Records}{Python, SQL, RapidFuzz, Excel}
+\begin{itemize}
+\item Matched three fleet databases with inconsistent records through a fuzzy matching pipeline that replaced an error-prone manual process.
+\item Achieved a \textbf{95\% match rate}, reducing manual work and human error.
+\end{itemize}
+
+\section*{Languages and Certifications}
+\begin{itemize}
+\item \textbf{English:} B2 (upper-intermediate), technical reading and writing.
+\item \textbf{DataCamp (19+ courses):} Python, SQL, Relational Databases, Power BI and DAX, Statistics, Data Engineering, Visualization, Machine Learning, AWS, Cloud Computing, Generative AI and LLMs.
+\end{itemize}
+
+\end{document}
