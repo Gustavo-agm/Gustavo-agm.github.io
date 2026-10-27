@@ -66,10 +66,21 @@ nav .me{font-family:var(--display);font-weight:800;text-decoration:none;color:va
 nav ul{display:flex;gap:1.3rem;list-style:none;margin:0;padding:0;font-family:var(--display);font-size:.95rem;overflow-x:auto;scrollbar-width:none}
 nav ul::-webkit-scrollbar{display:none}
 nav ul a{text-decoration:none;color:var(--ink);white-space:nowrap} nav ul a:hover{color:var(--muted)}
-nav .lang{flex:none;margin-left:auto;font-family:var(--display);font-weight:600;font-size:.88rem;white-space:nowrap;padding:.3rem .8rem;border-radius:999px;border:1.5px solid var(--c-malva);background:transparent;color:var(--ink);cursor:pointer}
-nav .lang:hover{border-color:var(--ink)}
-nav .lang-k{font-weight:400;color:var(--muted)}
-@media (max-width:640px){nav .me{display:none} nav .wrap{justify-content:flex-start} nav ul{gap:1.1rem;font-size:.92rem} nav .lang-k{display:none}}
+/* selector de idioma: píldora con globo, idioma actual y menú */
+nav .lang{position:relative;flex:none;margin-left:auto}
+.lang-btn{display:flex;align-items:center;gap:.5rem;height:36px;padding:0 .65rem 0 .7rem;border:0;border-radius:999px;background:var(--ink);color:var(--bg);font-family:var(--display);font-weight:600;font-size:.95rem;white-space:nowrap;cursor:pointer}
+.lang-btn:hover{background:color-mix(in srgb,var(--ink) 85%,var(--bg))}
+.lang-btn svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.lang-sep{width:1px;height:20px;background:currentColor;opacity:.45;margin-left:.15rem}
+.lang-chev{transition:transform .2s}
+.lang-btn[aria-expanded="true"] .lang-chev{transform:rotate(180deg)}
+nav .lang-list{display:block;overflow:visible;position:absolute;right:0;top:calc(100% + 8px);min-width:10rem;margin:0;padding:.35rem;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+nav .lang-list[hidden]{display:none}
+.lang-list button{display:flex;justify-content:space-between;align-items:center;gap:1rem;width:100%;padding:.5rem .7rem;border:0;border-radius:8px;background:none;color:var(--ink);font-family:var(--display);font-size:.95rem;text-align:left;cursor:pointer}
+.lang-list button:hover,.lang-list button:focus-visible{background:color-mix(in srgb,var(--ink) 10%,transparent)}
+.lang-list button[aria-checked="true"]{font-weight:600}
+.lang-list button[aria-checked="true"]::after{content:"✓";color:var(--c-enlace)}
+@media (max-width:640px){nav .me{display:none} nav .wrap{justify-content:flex-start} nav ul{gap:1.1rem;font-size:.92rem} .lang-btn{gap:.4rem;padding:0 .55rem 0 .6rem;font-size:.9rem}}
 
 /* hero */
 .hero{position:relative;min-height:min(100svh,900px);display:flex;align-items:center;overflow:hidden;background:var(--c-azul);color:var(--ink)}
@@ -225,7 +236,17 @@ footer{padding:1.5rem 0 2.5rem;color:var(--muted);font-size:.9rem;border-top:1px
       <li><a href="#laboratorio" data-i18n="t4">Algoritmos</a></li>
       <li><a href="#contacto" data-i18n="t5">Contacto</a></li>
     </ul>
-    <button class="lang" id="langToggle" type="button" aria-label="Idioma: Español. Cambiar a inglés"><span class="lang-k">Idioma:</span> Español</button>
+    <div class="lang">
+      <button class="lang-btn" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langList" aria-label="Idioma: Español">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.6 3.9 5.8 3.9 9.5s-1.3 6.9-3.9 9.5M12 2.5C9.4 5.1 8.1 8.3 8.1 12s1.3 6.9 3.9 9.5"/></svg>
+        <span id="langCur">Español</span><span class="lang-sep" aria-hidden="true"></span>
+        <svg class="lang-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <ul class="lang-list" id="langList" role="menu" hidden>
+        <li role="none"><button type="button" role="menuitemradio" data-lang="es" lang="es" aria-checked="true">Español</button></li>
+        <li role="none"><button type="button" role="menuitemradio" data-lang="en" lang="en" aria-checked="false">English</button></li>
+      </ul>
+    </div>
   </div>
 </nav>
 
@@ -764,17 +785,32 @@ function apply(lang){
   meta('meta[name="description"]').content = en ? EN.desc : ES_META.desc;
   meta('meta[property="og:title"]').content = en ? EN.title : ES_META.ogt;
   meta('meta[property="og:description"]').content = en ? EN.ogd : ES_META.ogd;
-  btn.innerHTML = en ? '<span class="lang-k">Language:</span> English' : '<span class="lang-k">Idioma:</span> Español';
-  btn.setAttribute("aria-label", en ? "Language: English. Switch to Spanish" : "Idioma: Español. Cambiar a inglés");
+  document.getElementById("langCur").textContent = en ? "English" : "Español";
+  btn.setAttribute("aria-label", en ? "Language: English" : "Idioma: Español");
+  items.forEach(b => b.setAttribute("aria-checked", b.dataset.lang === lang));
+}
+const list = document.getElementById("langList"), items = [...list.querySelectorAll("[data-lang]")];
+function openMenu(open){
+  list.hidden = !open; btn.setAttribute("aria-expanded", open);
+  if (open) (items.find(b => b.getAttribute("aria-checked") === "true") || items[0]).focus();
 }
 if (root.lang === "en") apply("en");
-btn.addEventListener("click", () => {
-  const lang = root.lang === "en" ? "es" : "en";
+btn.addEventListener("click", () => openMenu(list.hidden));
+items.forEach(b => b.addEventListener("click", () => {
+  const lang = b.dataset.lang;
+  openMenu(false); btn.focus();
+  if (lang === root.lang) return;
   apply(lang);
   try { localStorage.setItem("lang", lang); } catch(e){}
   try { const u = new URL(location.href); u.searchParams.set("lang", lang); history.replaceState(null, "", u); } catch(e){}
   document.dispatchEvent(new Event("langchange"));
+}));
+list.addEventListener("keydown", e => {
+  const i = items.indexOf(document.activeElement);
+  if (e.key === "ArrowDown" || e.key === "ArrowUp"){ e.preventDefault(); items[(i + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length].focus(); }
 });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !list.hidden){ openMenu(false); btn.focus(); } });
+document.addEventListener("click", e => { if (!list.hidden && !e.target.closest(".lang")) openMenu(false); });
 })();
 </script>
 
