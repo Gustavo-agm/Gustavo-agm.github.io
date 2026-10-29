@@ -208,6 +208,10 @@ section{border-top:1px solid color-mix(in srgb,var(--c-rosa) 60%,transparent)}
 .contact{font-family:var(--display);font-size:clamp(1.2rem,2.8vw,1.7rem);display:flex;flex-direction:column;gap:.5rem;margin:2rem 0;overflow-wrap:anywhere}
 .contact a{color:var(--ink);text-decoration-color:var(--c-vino);text-decoration-thickness:2px}
 footer{padding:1.5rem 0 2.5rem;color:var(--muted);font-size:.9rem;border-top:1px solid var(--c-malva)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.6rem 1.5rem}
+.visits{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--display);font-variant-numeric:tabular-nums}
+.visits[hidden]{display:none}
+.visits svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 <style>
 .summary{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:2rem;align-items:start}
@@ -589,7 +593,30 @@ footer{padding:1.5rem 0 2.5rem;color:var(--muted);font-size:.9rem;border-top:1px
 </section>
 </main>
 
-<footer><div class="wrap" data-i18n="t157">Gustavo Adolfo Garduño Martínez, Ciudad de México.</div></footer>
+<footer><div class="wrap"><span data-i18n="t157">Gustavo Adolfo Garduño Martínez, Ciudad de México.</span><span class="visits" id="visits" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span id="visitsN"></span></span></div></footer>
+
+<script>
+/* Contador de visitas (abacus.jasoncameron.dev): suma una vez por sesión del navegador; si el servicio falla, no se muestra. */
+(() => {
+const box = document.getElementById("visits"), out = document.getElementById("visitsN");
+const API = "https://abacus.jasoncameron.dev/", KEY = "gustavo-agm-github-io/visitas";
+let n = null, counted = false;
+try { counted = sessionStorage.getItem("visita-contada") === "1"; } catch(e){}
+const render = () => {
+  const en = document.documentElement.lang === "en";
+  out.textContent = en ? `${n.toLocaleString("en-US")} visit${n === 1 ? "" : "s"}` : `${n.toLocaleString("es-MX")} visita${n === 1 ? "" : "s"}`;
+};
+fetch(API + (counted ? "get/" : "hit/") + KEY)
+  .then(r => r.ok ? r.json() : Promise.reject())
+  .then(d => {
+    if (typeof d.value !== "number") return;
+    n = d.value; render(); box.hidden = false;
+    try { sessionStorage.setItem("visita-contada", "1"); } catch(e){}
+  })
+  .catch(() => {});
+document.addEventListener("langchange", () => { if (n !== null) render(); });
+})();
+</script>
 
 <script>
 /* Cambio de idioma: el español está en el HTML y aquí van las traducciones al inglés. */
